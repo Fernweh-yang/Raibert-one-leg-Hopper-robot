@@ -1,0 +1,38 @@
+<mujoco>
+    <asset>
+      <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="256"/>
+      <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+      <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
+  </asset>
+  <option timestep="0.001" integrator="RK4" gravity="0 0 -9.81">
+      <flag sensornoise="disable" contact="enable" energy="enable"/>
+  </option>
+
+  <worldbody>
+  <light diffuse="10 10 10" pos="0 0 10" dir="0 0 -1"/>
+      <geom type="plane" size="25 10 0.1" material="matplane"/>
+      <body name="torso" pos="0 0 2" >
+          <joint name="x" type="slide" pos="0 0 0" axis="1 0 0" />
+          <joint name="z" type="slide" pos="0 0 0" axis="0 0 1" />
+          <geom type="sphere" size=".1" rgba="1 0 0 1" mass="1"/>
+          <body name="leg" pos="0 0 -0.5" >
+              <joint name="hip" type="hinge" pos="0 0 0.5" axis="0 -1 0" />
+              <geom type="cylinder" size="0.05 0.5" rgba="0 1 0 1" mass="1"/>
+              <body name="foot" pos="0 0 -0.75" >
+                  <joint name="knee" type="slide" pos="0 0 0.25" axis="0 0 -1" />
+                  <geom type="cylinder" pos = "0 0 0.125" size=".02 0.125" rgba="0 0 1 1" mass="0"/>
+                  <geom type="sphere" size="0.05" rgba="1 1 .0 1" mass="0.1"/>
+              </body>
+          </body>
+      </body>
+  </worldbody>
+
+  <actuator>
+      <position name="hip_p" joint="hip" />
+      <velocity name="hip_v" joint="hip" />
+      <position name="knee_p" joint="knee"/>
+      <velocity name="knee_v" joint="knee"/>
+  </actuator>
+
+
+</mujoco>

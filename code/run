@@ -1,0 +1,4 @@
+reset
+make clean
+make
+cd ../../bin && ./one_leg_robot
